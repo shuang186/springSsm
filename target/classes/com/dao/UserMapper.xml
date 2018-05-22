@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.UserMapper" >
+  <resultMap id="userMap" type="com.model.User" >
+    <constructor >
+      <idArg column="id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="sex" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+
+  <select id="selectUserById"
+          resultType="com.model.User" parameterType="int">
+    <!-- 这里和普通的sql 查询语句差不多，对于只有一个查询条件后面的 #{pid}表示占位符，里面不一定要写pid,写啥都可以，但是不要空着；如果有多个查询条件，则要写pojo类里面的属性 -->
+    select * from test_user where id = #{pid}
+  </select>
+
+  <!-- 查询person 表所有数据 -->
+  <select id="getAllUser" resultType="com.model.User">
+    select * from test_user
+  </select>
+
+  <select id=" getUserById" resultType="com.model.User" parameterType="int">
+    select * from test_user where id=#{id}
+  </select>
+
+  <!-- 根据id更新数据 -->
+  <update id="updateUserById" parameterType="com.model.User">
+    update test_user set name=#{name},sex=#{sex} where id = #{pid}
+  </update>
+
+  <!-- 向 person 表插入一条数据 -->
+  <insert id="addUser" parameterType="com.model.User">
+    insert into test_user(pname,sex) values(#{name},#{sex})
+  </insert>
+
+  <!-- 根据 pid 删除数据 -->
+  <delete id="deleteUserById" parameterType="Long">
+    delete from test_user where id=#{pid}
+  </delete>
+
+</mapper>
